@@ -1,0 +1,14 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.title {
+    text-align: center;
+    padding-top: 4rem;
+}
+
+.sub-title {
+    text-align: center;
+}

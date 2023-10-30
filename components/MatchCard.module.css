@@ -1,0 +1,27 @@
+.edit-match-card {
+    display: flex;
+    width: 100%;
+}
+
+.match-card {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 2fr;
+    justify-items: center;
+    align-items: center;
+    border: 1px solid rgba(200, 200, 200, 1);
+    font-size: 0.85rem;
+}
+
+.result {
+    font-weight: 700;
+    background-color: rgba(200, 200, 200, 0.5);
+    padding: 0.5rem 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.round-label {
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+}

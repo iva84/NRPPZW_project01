@@ -1,0 +1,28 @@
+.order-card {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 2fr;
+    justify-items: center;
+    align-items: center;
+    border: 1px solid rgba(200, 200, 200, 1);
+    font-size: 0.85rem;
+}
+
+.order-num {
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.name {
+    font-weight: 700;
+}
+
+.result {
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.total-score {
+    font-weight: 700;
+}

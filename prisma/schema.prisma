@@ -15,7 +15,9 @@ model competition {
   loss_pts           Decimal  @db.Decimal(10, 2)
   creation_timestamp DateTime @db.Timestamp(6)
   creator_id         String   @db.Uuid
+  current_round      Int
   creator            creator  @relation(fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  match              match[]
   team               team[]
 }
 
@@ -27,14 +29,17 @@ model creator {
 }
 
 model match {
-  id                        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  team1_id                  String   @db.Uuid
-  team2_id                  String   @db.Uuid
-  team1_score               Decimal  @db.Decimal(10, 2)
-  team2_score               Decimal  @db.Decimal(10, 2)
-  match_timestamp           DateTime @db.Timestamp(6)
-  team_match_team1_idToteam team     @relation("match_team1_idToteam", fields: [team1_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  team_match_team2_idToteam team     @relation("match_team2_idToteam", fields: [team2_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                        String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  team1_id                  String      @db.Uuid
+  team2_id                  String      @db.Uuid
+  team1_score               Decimal?    @db.Decimal(10, 2)
+  team2_score               Decimal?    @db.Decimal(10, 2)
+  match_timestamp           DateTime?   @db.Timestamp(6)
+  match_round               Int
+  competition_id            String      @db.Uuid
+  competition               competition @relation(fields: [competition_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  team_match_team1_idToteam team        @relation("match_team1_idToteam", fields: [team1_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  team_match_team2_idToteam team        @relation("match_team2_idToteam", fields: [team2_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model team {

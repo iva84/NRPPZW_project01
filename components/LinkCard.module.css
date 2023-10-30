@@ -1,0 +1,29 @@
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(200, 200, 200, 0.5);;
+  text-decoration: none;
+}
+
+.card:hover {
+  background-color: var(--card-bkg);
+}
+
+.card h2 {
+  font-weight: 600;
+}
+
+.card p {
+  margin: 0;
+  opacity: 0.6;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 30ch;
+  text-align: center;
+}
