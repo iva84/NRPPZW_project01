@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 
 export default async function CompetitionsByIdPage({ params }: { params: { id: string } }) {
   const session = await getSession();
-  const router = useRouter();
 
   const competition = await getCompetitionById(params.id);
 
@@ -19,15 +18,6 @@ export default async function CompetitionsByIdPage({ params }: { params: { id: s
         {competition?.win_pts.toString()} / {competition?.draw_pts.toString()} /{' '}
         {competition?.loss_pts.toString()}
       </h3>
-      {session && (
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            router.back();
-          }}>
-          Go Back
-        </button>
-      )}
       <TeamsOrder competitionId={params.id} />
       <CompetitionResults competitionId={params.id} canEdit={session ? true : false} />
     </main>
