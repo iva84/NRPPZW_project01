@@ -2,14 +2,10 @@ import roundRobin from '@/lib/algoritam';
 import { db } from '@/lib/db';
 import { getCurrentUserOrCreate } from '@/lib/repo';
 import { CompetitionFormInput, RoundResult } from '@/types';
-import { getSession } from '@auth0/nextjs-auth0';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   const formData: CompetitionFormInput = await req.json();
-
-  //const session = await getSession();
-  //if (!session) return;
 
   const user = await getCurrentUserOrCreate();
   if (!user) return;

@@ -1,16 +1,5 @@
 import { getSession } from '@auth0/nextjs-auth0';
 import { db } from './db';
-import { equal } from 'assert';
-
-/*
-export async function isUserLoggedIn() {
-  const session = await getSession();
-  if (!session) {
-    return false;
-  }
-  return true;
-}
-*/
 
 // only for logged in user
 export async function getCurrentUserOrCreate() {
@@ -120,6 +109,28 @@ export async function getTeamsByCompetition(competitionId: string) {
       }
     });
     return team;
+  } catch (err: any) {
+    return null;
+  }
+}
+
+export async function getCreator(competitionId: string) {
+  try {
+    const competition = await db.competition.findUnique({
+      where: {
+        id: competitionId
+      }
+    });
+    if (competition) {
+      const creator = await db.creator.findUnique({
+        where: {
+          id: competition.creator_id
+        }
+      });
+
+      return creator;
+    }
+    return null;
   } catch (err: any) {
     return null;
   }
