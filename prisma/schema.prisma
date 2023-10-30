@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model competition {
+  id                 String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name               String
+  win_pts            Decimal  @db.Decimal(10, 2)
+  draw_pts           Decimal  @db.Decimal(10, 2)
+  loss_pts           Decimal  @db.Decimal(10, 2)
+  creation_timestamp DateTime @db.Timestamp(6)
+  creator_id         String   @db.Uuid
+  current_round      Int
+  creator            creator  @relation(fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  match              match[]
+  team               team[]
+}
+
+model creator {
+  id          String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  email       String        @unique @db.VarChar
+  name        String?       @db.VarChar
+  competition competition[]
+}
+
+model match {
+  id                        String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  team1_id                  String      @db.Uuid
+  team2_id                  String      @db.Uuid
+  team1_score               Decimal?    @db.Decimal(10, 2)
+  team2_score               Decimal?    @db.Decimal(10, 2)
+  match_timestamp           DateTime?   @db.Timestamp(6)
+  match_round               Int
+  competition_id            String      @db.Uuid
+  competition               competition @relation(fields: [competition_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  team_match_team1_idToteam team        @relation("match_team1_idToteam", fields: [team1_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  team_match_team2_idToteam team        @relation("match_team2_idToteam", fields: [team2_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model team {
+  id                         String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name                       String
+  win                        Int?
+  draw                       Int?
+  loss                       Int?
+  competition_id             String      @db.Uuid
+  match_match_team1_idToteam match[]     @relation("match_team1_idToteam")
+  match_match_team2_idToteam match[]     @relation("match_team2_idToteam")
+  competition                competition @relation(fields: [competition_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
